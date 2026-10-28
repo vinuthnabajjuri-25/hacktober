@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inkprint — your handwriting, rendered</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="brand" href="/">Inkprint<span>.</span></a>
+      <span class="local-note">Handwriting sheet demo</span>
+    </header>
+
+    <section class="intro">
+      <p class="eyebrow">YOUR WORDS, YOUR HANDWRITING</p>
+      <h1>Make it look<br>like <em>you</em> wrote it.</h1>
+      <p class="lead">Give us a handwriting sample and the text. Get a page you can print, in your own letter shapes.</p>
+    </section>
+
+    {% if error %}
+    <div class="error" role="alert">{{ error }}</div>
+    {% endif %}
+
+    <section class="steps" aria-label="How it works">
+      <article class="step">
+        <span class="step-number">01</span>
+        <h2>Fill the sheet</h2>
+        <p>Download and print the character sheet. Write one clear example in each box.</p>
+        <a class="text-link" href="{{ url_for('character_sheet') }}">Download handwriting sheet <span aria-hidden="true">↓</span></a>
+        <p>Just want to try it? Use this font-based demo sample:</p>
+        <a class="text-link" href="{{ url_for('sample_handwriting') }}">Download example sample <span aria-hidden="true">↓</span></a>
+      </article>
+      <article class="step">
+        <span class="step-number">02</span>
+        <h2>Add your words</h2>
+        <p>Upload a completed sheet or the example sample, then enter the text you want to render.</p>
+      </article>
+      <article class="step">
+        <span class="step-number">03</span>
+        <h2>Print or save</h2>
+        <p>Preview the result and download a PNG image or PDF.</p>
+      </article>
+    </section>
+
+    <form class="workspace" action="{{ url_for('generate') }}" method="post" enctype="multipart/form-data">
+      <div class="form-heading">
+        <div>
+          <p class="eyebrow">CREATE A PAGE</p>
+          <h2>Your handwriting preview</h2>
+        </div>
+        <span class="file-note">PNG, JPEG or WEBP · max 8 MB</span>
+      </div>
+      <label class="field-label" for="sample">Completed handwriting sheet</label>
+      <input id="sample" name="sample" type="file" accept="image/png,image/jpeg,image/webp" required>
+      <label class="field-label" for="text">Text to render</label>
+      <textarea id="text" name="text" rows="6" maxlength="2000" placeholder="Type or paste your text here…" required>{{ request.form.get('text', '') }}</textarea>
+      <div class="form-footer">
+        <p>Supported: English letters, numbers, spaces, common punctuation, $ and &amp;.</p>
+        <button type="submit">Generate handwriting <span aria-hidden="true">→</span></button>
+      </div>
+    </form>
+
+    <footer>Prototype · Your image is sent to this host for processing and is not saved by the app. Avoid uploading sensitive documents.</footer>
+  </main>
+</body>
+</html>

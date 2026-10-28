@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your handwriting — Inkprint</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="brand" href="/">Inkprint<span>.</span></a>
+      <a class="text-link" href="/">Start over</a>
+    </header>
+    <section class="result-heading">
+      <p class="eyebrow">YOUR PAGE IS READY</p>
+      <h1>Looks like <em>you.</em></h1>
+      <p class="lead">Preview your rendered handwriting, then save an image or print-ready PDF.</p>
+      <div class="downloads">
+        <a class="button" href="data:image/png;base64,{{ image_data }}" download="handwriting.png">Download PNG</a>
+        <a class="button secondary" href="data:application/pdf;base64,{{ pdf_data }}" download="handwriting.pdf">Download PDF</a>
+      </div>
+    </section>
+    <figure class="preview">
+      <img src="data:image/png;base64,{{ image_data }}" alt="Preview of your text rendered in your handwriting">
+    </figure>
+    <footer>Prototype · Your image was sent to this host for processing and is not saved by the app. Avoid uploading sensitive documents.</footer>
+  </main>
+</body>
+</html>
